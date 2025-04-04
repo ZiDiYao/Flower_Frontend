@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGreen"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/buttonGreen" />
+
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/buttonGreen" />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:backgroundTint="@color/buttonGreen" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        android:backgroundTint="@color/buttonGreen"
+        android:layout_marginTop="12dp"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/btn_goto_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identify a Flower"
+        android:backgroundTint="@color/buttonGreen"
+        android:layout_marginTop="24dp" />
+
+</LinearLayout>

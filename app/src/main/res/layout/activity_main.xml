@@ -11,7 +11,6 @@
         android:gravity="center_horizontal"
         android:padding="32dp">
 
-        <!-- App Title -->
         <TextView
             android:id="@+id/app_title"
             android:layout_width="wrap_content"
@@ -46,7 +45,6 @@
             android:padding="12dp"
             android:background="@drawable/edittext_background" />
 
-        <!-- Login Button -->
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
@@ -57,7 +55,6 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_background" />
 
-        <!-- Logout Button -->
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
@@ -69,14 +66,6 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/button_background" />
 
-        <!-- Upload Page Button -->
-        <Button
-            android:id="@+id/btn_goto_upload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Identify a Flower"
-            android:backgroundTint="@color/buttonGreen"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/button_background" />
+
     </LinearLayout>
 </ScrollView>

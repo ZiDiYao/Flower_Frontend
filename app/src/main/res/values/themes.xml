@@ -1,9 +1,11 @@
+<!-- res/values-night/themes.xml -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.FlowIdentification_Demo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.Flory" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:colorBackground">#121212</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="colorPrimary">#66BB6A</item> <!-- 绿色 -->
+        <item name="colorPrimaryVariant">#388E3C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#A5D6A7</item>
     </style>
-
-    <style name="Theme.FlowIdentification_Demo" parent="Base.Theme.FlowIdentification_Demo" />
 </resources>

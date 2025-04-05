@@ -22,4 +22,11 @@
         android:text="Identify a Flower"
         android:backgroundTint="@color/buttonGreen"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_jump_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Upload Page" />
+
 </LinearLayout>

@@ -1,20 +1,14 @@
 package com.zidi.flowidentification_demo;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
@@ -87,19 +81,32 @@ public class DashboardActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) return;
 
         Uri imageUri = null;
+
         if (requestCode == REQUEST_CODE_CAMERA) {
+            // 拍照模式下使用全局变量
             imageUri = photoUri;
         } else if (requestCode == REQUEST_CODE_GALLERY && data != null) {
+            // 图库模式下从 data 获取
             imageUri = data.getData();
         }
 
         if (imageUri != null) {
+            // 获取 MIME 类型判断是否是 jpg/png
             String mimeType = getContentResolver().getType(imageUri);
-            if (mimeType != null && (mimeType.equals("image/jpeg") || mimeType.equals("image/png"))) {
-                Toast.makeText(this, "Image saved: " + imageUri.getPath(), Toast.LENGTH_SHORT).show();
+            if (mimeType != null &&
+                    (mimeType.equals("image/jpeg") || mimeType.equals("image/png"))) {
+
+                // ✅ 跳转至 PreviewActivity 并展示该图像
+                Intent intent = new Intent(this, PreviewActivity.class);
+                intent.putExtra("image_uri", imageUri.toString());
+                startActivity(intent);
+
             } else {
-                Toast.makeText(this, "Only JPG and PNG are supported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "❌ Only JPG and PNG are supported", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this, "❌ Image selection failed", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

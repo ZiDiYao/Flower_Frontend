@@ -1,4 +1,3 @@
-// UploadApi.java
 package com.zidi.flowidentification_demo.network
 
 import okhttp3.MultipartBody
@@ -11,5 +10,7 @@ import retrofit2.http.Part
 interface UploadApi {
     @Multipart
     @POST("/api/upload/image")
-    fun uploadImage(@Part file: MultipartBody.Part?): Call<ResponseBody?>?
+    fun uploadImage(
+        @Part image: MultipartBody.Part
+    ): Call<ResponseBody>
 }

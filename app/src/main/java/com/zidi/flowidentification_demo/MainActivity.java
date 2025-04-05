@@ -2,6 +2,7 @@ package com.zidi.flowidentification_demo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             RetrofitClient.getInstance().getAuthApi().login(request).enqueue(new Callback<LoginResponse>(){
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    Log.d("LOGIN_DEBUG", "response code = " + response.code());
+                    Log.d("LOGIN_DEBUG", "response body = " + response.body());
                     LoginResponse loginResponse = response.body();
 
                     if (response.isSuccessful() && loginResponse != null && "success".equals(loginResponse.getStatus())) {

@@ -10,6 +10,8 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +31,17 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- FileProvider 权限配置 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
 
         <activity
             android:name=".MainActivity"
@@ -41,7 +54,9 @@
 
         <activity android:name=".UploadActivity" />
         <activity android:name=".DashboardActivity" />
-<!--        <activity android:name=".UploadActivity" />-->
+        <activity android:name=".PreviewActivity" />
+
+        <!--        <activity android:name=".UploadActivity" />-->
 
     </application>
 </manifest>

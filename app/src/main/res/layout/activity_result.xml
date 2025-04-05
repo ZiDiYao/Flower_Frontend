@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF7F5"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/text_result_flower_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌸 The name of the flower: Rose"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#4A148C"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/text_result_confidence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confidence: 98%"
+            android:textSize="18sp"
+            android:textColor="#6A1B9A"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/text_result_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduction: Roses are a symbol of love and beauty..."
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:background="#FFFFFF"
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="8dp"
+            android:elevation="4dp"
+            android:backgroundTint="#FFFFFF" />
+    </LinearLayout>
+</ScrollView>

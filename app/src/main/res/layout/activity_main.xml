@@ -1,54 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGreen"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    android:background="@color/backgroundGreen">
 
-    <EditText
-        android:id="@+id/input_email"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/buttonGreen" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp">
 
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/buttonGreen" />
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌸 Flory"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="32dp" />
 
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background" />
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign In"
-        android:backgroundTint="@color/buttonGreen" />
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background" />
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign Out"
-        android:backgroundTint="@color/buttonGreen"
-        android:layout_marginTop="12dp"
-        android:enabled="false" />
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:backgroundTint="@color/buttonGreen"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/button_background" />
 
-    <Button
-        android:id="@+id/btn_goto_upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Identify a Flower"
-        android:backgroundTint="@color/buttonGreen"
-        android:layout_marginTop="24dp" />
+        <!-- Logout Button -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Out"
+            android:backgroundTint="@color/buttonGreen"
+            android:textColor="#FFFFFF"
+            android:enabled="false"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button_background" />
 
-</LinearLayout>
+        <!-- Upload Page Button -->
+        <Button
+            android:id="@+id/btn_goto_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Identify a Flower"
+            android:backgroundTint="@color/buttonGreen"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_background" />
+    </LinearLayout>
+</ScrollView>

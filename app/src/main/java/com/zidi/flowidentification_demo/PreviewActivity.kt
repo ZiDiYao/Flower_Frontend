@@ -1,6 +1,7 @@
 package com.zidi.flowidentification_demo
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -112,9 +113,13 @@ class PreviewActivity : AppCompatActivity() {
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@PreviewActivity, " Upload successful", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PreviewActivity, "Upload successful", Toast.LENGTH_SHORT).show()
+
+                        // go to the result page
+                        val intent = Intent(this@PreviewActivity, ResultActivity::class.java)
+                        startActivity(intent)
                     } else {
-                        Toast.makeText(this@PreviewActivity, " Upload failed: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PreviewActivity, "Upload failed: ${response.code()}", Toast.LENGTH_SHORT).show()
                         Log.e("UPLOAD_DEBUG", "Server error: ${response.code()}")
                     }
                 }

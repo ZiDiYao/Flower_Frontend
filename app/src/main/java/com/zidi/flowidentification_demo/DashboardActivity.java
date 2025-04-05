@@ -83,20 +83,19 @@ public class DashboardActivity extends AppCompatActivity {
         Uri imageUri = null;
 
         if (requestCode == REQUEST_CODE_CAMERA) {
-            // 拍照模式下使用全局变量
+
             imageUri = photoUri;
         } else if (requestCode == REQUEST_CODE_GALLERY && data != null) {
-            // 图库模式下从 data 获取
+
             imageUri = data.getData();
         }
 
         if (imageUri != null) {
-            // 获取 MIME 类型判断是否是 jpg/png
+
             String mimeType = getContentResolver().getType(imageUri);
             if (mimeType != null &&
                     (mimeType.equals("image/jpeg") || mimeType.equals("image/png"))) {
 
-                // ✅ 跳转至 PreviewActivity 并展示该图像
                 Intent intent = new Intent(this, PreviewActivity.class);
                 intent.putExtra("image_uri", imageUri.toString());
                 startActivity(intent);

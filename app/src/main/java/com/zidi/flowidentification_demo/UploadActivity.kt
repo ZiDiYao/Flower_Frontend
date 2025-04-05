@@ -42,7 +42,6 @@ class UploadActivity : AppCompatActivity() {
         btnSelectImage = findViewById(R.id.btn_select_image)
 
         btnSelectImage.setOnClickListener {
-            Log.d("UPLOAD_DEBUG", "📌 弹窗打开")
             showImageSourceDialog()
         }
     }
@@ -71,8 +70,7 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun previewAndNavigate(uri: Uri) {
-        Toast.makeText(this, "跳转预览页", Toast.LENGTH_SHORT).show()
-        Log.d("UPLOAD_DEBUG", "跳转 PreviewActivity: $uri")
+        Toast.makeText(this, "Navigate to Preview Page", Toast.LENGTH_SHORT).show()
 
         val intent = Intent(this, PreviewActivity::class.java)
         intent.putExtra("image_uri", uri.toString())

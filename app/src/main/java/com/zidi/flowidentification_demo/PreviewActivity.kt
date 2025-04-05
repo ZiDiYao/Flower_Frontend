@@ -12,16 +12,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.zidi.flowidentification_demo.Util.PathUtil
 import com.zidi.flowidentification_demo.network.RetrofitClient
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import okio.BufferedSink
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class PreviewActivity : AppCompatActivity() {
 
@@ -36,15 +35,20 @@ class PreviewActivity : AppCompatActivity() {
         val btnUpload = findViewById<Button>(R.id.btn_upload_flower)
         val btnBack = findViewById<Button>(R.id.btn_back)
 
-        // 接收图片 URI
         val uriStr = intent.getStringExtra("image_uri")
+        if (uriStr == null) {
+            Toast.makeText(this, "No image URI received", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         imageUri = Uri.parse(uriStr)
         imageView.setImageURI(imageUri)
 
-        // 返回按钮
-        btnBack.setOnClickListener { finish() }
+        btnBack.setOnClickListener {
+            finish()
+        }
 
-        // 上传按钮
         btnUpload.setOnClickListener {
             checkPermissionThenUpload()
         }
@@ -64,33 +68,33 @@ class PreviewActivity : AppCompatActivity() {
         }
     }
 
-    // 动态权限回调
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == permissionRequestCode && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == permissionRequestCode &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
             imageUri?.let { uploadImageToServer(it) }
         } else {
-            Toast.makeText(this, "Fuck it !!! NO Right", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun uploadImageToServer(uri: Uri) {
         val contentResolver = contentResolver
         val inputStream = contentResolver.openInputStream(uri)
-
         if (inputStream == null) {
-            Toast.makeText(this, "Fuck it !!! Failed to open image stream", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Failed to open image stream", Toast.LENGTH_SHORT).show()
             return
         }
 
+        val mimeType = contentResolver.getType(uri) ?: "image/jpeg"
         val requestBody = object : RequestBody() {
-            override fun contentType(): MediaType? {
-                return MediaType.parse("image/*")
-            }
+            override fun contentType(): MediaType? = MediaType.parse(mimeType)
 
-            override fun writeTo(sink: okio.BufferedSink) {
+            override fun writeTo(sink: BufferedSink) {
                 inputStream.use {
                     val buffer = ByteArray(1024)
                     var bytesRead: Int
@@ -108,25 +112,17 @@ class PreviewActivity : AppCompatActivity() {
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@PreviewActivity, "Yes !!! Upload successful", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PreviewActivity, " Upload successful", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(
-                            this@PreviewActivity,
-                            "Fuck it !!! Upload failed, server responded: ${response.code()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@PreviewActivity, " Upload failed: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        Log.e("UPLOAD_DEBUG", "Server error: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Toast.makeText(
-                        this@PreviewActivity,
-                        "⚠Fuck it !!! Network error: ${t.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@PreviewActivity, "Network error: ${t.message}", Toast.LENGTH_LONG).show()
                     Log.e("UPLOAD_DEBUG", "Upload failed", t)
                 }
             })
     }
-
 }

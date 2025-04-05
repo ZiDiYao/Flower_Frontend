@@ -55,17 +55,5 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_background" />
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign Out"
-            android:backgroundTint="@color/buttonGreen"
-            android:textColor="#FFFFFF"
-            android:enabled="false"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/button_background" />
-
-
     </LinearLayout>
 </ScrollView>

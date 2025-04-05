@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.input_email);
         inputPassword = findViewById(R.id.input_password);
         loginBtn = findViewById(R.id.btn_login);
-        logoutBtn = findViewById(R.id.btn_logout);
 
         loginBtn.setOnClickListener(v -> {
             String email = inputEmail.getText().toString().trim();
@@ -69,14 +68,5 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-        logoutBtn.setOnClickListener(v -> {
-            loginBtn.setEnabled(true);
-            logoutBtn.setEnabled(false);
-            inputEmail.setText("");
-            inputPassword.setText("");
-            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
-        });
-
-        logoutBtn.setEnabled(false);
     }
 }

@@ -45,12 +45,11 @@ class TextInputActivity : AppCompatActivity() {
         }
     }
 
-    // 设置 Spinner 的选项与样式
     private fun setupSpinner(id: Int, options: List<String>) {
         val spinner = findViewById<Spinner>(id)
         val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options) {
             override fun isEnabled(position: Int): Boolean {
-                return position != 0 // 禁用提示项
+                return position != 0
             }
 
             override fun getDropDownView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {

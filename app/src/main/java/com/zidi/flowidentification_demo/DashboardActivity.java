@@ -101,10 +101,10 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
 
             } else {
-                Toast.makeText(this, "❌ Only JPG and PNG are supported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, " Only JPG and PNG are supported", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, "❌ Image selection failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Image selection failed", Toast.LENGTH_SHORT).show();
         }
     }
 

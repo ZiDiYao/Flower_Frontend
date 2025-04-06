@@ -2,6 +2,7 @@ package com.zidi.flowidentification_demo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.zidi.flowidentification_demo.model.FlowerDescription
@@ -19,10 +20,9 @@ class TextInputActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_input)
 
-        // 获取传入图片 URI
         imageUriStr = intent.getStringExtra("image_uri") ?: ""
 
-        // 设置所有 Spinner
+
         setupSpinner(R.id.spinner_color, listOf("Select a color", "Red", "Yellow", "White", "Pink", "Purple", "Blue"))
         setupSpinner(R.id.spinner_petals, listOf("Select petal count", "1-3", "4-6", "7-9", "10+"))
         setupSpinner(R.id.spinner_smell, listOf("Is it scented?", "Yes", "No"))
@@ -64,7 +64,7 @@ class TextInputActivity : AppCompatActivity() {
         spinner.setSelection(0)
     }
 
-    // 提交前校验是否已选择有效值
+
     private fun validateSelections(): Boolean {
         val fields = mapOf(
             "color" to getSpinnerValue(R.id.spinner_color),
@@ -87,22 +87,23 @@ class TextInputActivity : AppCompatActivity() {
     private fun extractImageName(uriStr: String): String =
         uriStr.substringAfterLast("/")
 
-    // 上传 JSON
     private fun uploadJson(data: FlowerDescription) {
         RetrofitClient.getInstance().getDescriptionApi().saveDescription(data)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
+                        Log.e("API_ERROR", "Error code: ${response.code()}, errorBody: ${response.errorBody()?.string()}")
+
                         Toast.makeText(this@TextInputActivity, "Saved!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
                         finish()
                     } else {
-                        Toast.makeText(this@TextInputActivity, "Save failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@TextInputActivity, "Fuck it !!! Save failed", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Toast.makeText(this@TextInputActivity, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TextInputActivity, "Oh No !!! Network error: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }

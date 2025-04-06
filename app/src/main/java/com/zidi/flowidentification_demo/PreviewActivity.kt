@@ -129,17 +129,18 @@ class PreviewActivity : AppCompatActivity() {
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@PreviewActivity, "Upload successful", Toast.LENGTH_SHORT).show()
+                        val fileName = response.body()?.string() ?: "unknown.jpg"
 
-                        // Navigate to next screen for user text input
+                        // To pass the real image name to TextInputActivity
                         val intent = Intent(this@PreviewActivity, TextInputActivity::class.java)
-                        intent.putExtra("image_uri", imageUri.toString())  // Pass image URI to next screen
+                        intent.putExtra("image_name", fileName)  // 👈 using fileName instead of imageUri
                         startActivity(intent)
                         finish()
                     } else {
                         Toast.makeText(this@PreviewActivity, "Upload failed: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
+
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Toast.makeText(this@PreviewActivity, "Network error: ${t.message}", Toast.LENGTH_LONG).show()

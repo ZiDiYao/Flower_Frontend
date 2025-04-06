@@ -14,30 +14,24 @@ import retrofit2.Response
 
 class TextInputActivity : AppCompatActivity() {
 
-    // Stores the image URI passed from the previous activity
-    private lateinit var imageUriStr: String
+    private lateinit var imageName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_input)
 
-        // Receive the image URI string from PreviewActivity
-        imageUriStr = intent.getStringExtra("image_uri") ?: ""
+        imageName = intent.getStringExtra("image_name") ?: ""
 
-        // Initialize each Spinner with options and a hint item
         setupSpinner(R.id.spinner_color, listOf("Select a color", "Red", "Yellow", "White", "Pink", "Purple", "Blue"))
         setupSpinner(R.id.spinner_petals, listOf("Select petal count", "1-3", "4-6", "7-9", "10+"))
         setupSpinner(R.id.spinner_smell, listOf("Is it scented?", "Yes", "No"))
         setupSpinner(R.id.spinner_location, listOf("Select a location", "Park", "Campus", "Mountain", "Lakeside", "Garden"))
 
-        // When "Submit" button is clicked
         findViewById<Button>(R.id.btn_submit).setOnClickListener {
-            // Validate spinner selections before uploading
             if (!validateSelections()) return@setOnClickListener
 
-            // Create the FlowerDescription object with image name and selected info
             val data = FlowerDescription(
-                imageName = extractImageName(imageUriStr),
+                imageName = imageName,
                 description = mapOf(
                     "color" to getSpinnerValue(R.id.spinner_color),
                     "petals" to getSpinnerValue(R.id.spinner_petals),
@@ -45,8 +39,6 @@ class TextInputActivity : AppCompatActivity() {
                     "location" to getSpinnerValue(R.id.spinner_location)
                 )
             )
-
-            // Send JSON to backend
             uploadJson(data)
         }
     }

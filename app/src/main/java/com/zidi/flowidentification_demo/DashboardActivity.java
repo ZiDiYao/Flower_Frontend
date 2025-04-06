@@ -19,36 +19,41 @@ public class DashboardActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CAMERA = 1001;
     private static final int REQUEST_CODE_GALLERY = 1002;
-    private Uri photoUri;
+    private Uri photoUri;  // To store the URI of the photo taken by the camera
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        // Button to trigger flower identification
         Button identifyBtn = findViewById(R.id.btn_identify);
         identifyBtn.setOnClickListener(v -> showImagePickDialog());
     }
 
+//     Show a dialog to let the user choose between camera and gallery
     private void showImagePickDialog() {
         String[] options = {"Take Photo", "Choose from Gallery"};
         new AlertDialog.Builder(this)
                 .setTitle("Select Image")
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) {
-                        openCamera();
+                        openCamera();  // Launch camera
                     } else {
-                        openGallery();
+                        openGallery(); // Open gallery
                     }
                 })
                 .show();
     }
 
+    // Open device camera to take a new photo
     private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile;
         try {
+            // Create a file to store the captured image
             photoFile = createImageFile();
+            // Get URI using FileProvider for secure access
             photoUri = FileProvider.getUriForFile(this,
                     getPackageName() + ".provider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -59,6 +64,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    // Open gallery to choose an existing image
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -68,12 +74,14 @@ public class DashboardActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_GALLERY);
     }
 
+    // Create a temporary image file with a timestamp-based name
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File storageDir = getExternalFilesDir("images");
         return File.createTempFile("IMG_" + timeStamp, ".jpg", storageDir);
     }
 
+    // Handle results from camera or gallery
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -82,24 +90,24 @@ public class DashboardActivity extends AppCompatActivity {
 
         Uri imageUri = null;
 
+        // Get image URI from camera
         if (requestCode == REQUEST_CODE_CAMERA) {
-
             imageUri = photoUri;
-        } else if (requestCode == REQUEST_CODE_GALLERY && data != null) {
-
+        }
+        // Or get image URI from gallery selection
+        else if (requestCode == REQUEST_CODE_GALLERY && data != null) {
             imageUri = data.getData();
         }
 
+        // If a valid image is selected
         if (imageUri != null) {
-
             String mimeType = getContentResolver().getType(imageUri);
             if (mimeType != null &&
                     (mimeType.equals("image/jpeg") || mimeType.equals("image/png"))) {
-
+                // Start PreviewActivity and pass the image URI
                 Intent intent = new Intent(this, PreviewActivity.class);
                 intent.putExtra("image_uri", imageUri.toString());
                 startActivity(intent);
-
             } else {
                 Toast.makeText(this, " Only JPG and PNG are supported", Toast.LENGTH_SHORT).show();
             }

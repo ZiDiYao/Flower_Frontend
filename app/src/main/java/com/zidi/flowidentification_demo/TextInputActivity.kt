@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.zidi.flowidentification_demo.model.FlowerDescription
 import com.zidi.flowidentification_demo.network.RetrofitClient
+import com.zidi.flowidentification_demo.model.FlowerDescription
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class TextInputActivity : AppCompatActivity() {
 
@@ -88,6 +89,7 @@ class TextInputActivity : AppCompatActivity() {
         uriStr.substringAfterLast("/")
 
     private fun uploadJson(data: FlowerDescription) {
+        Log.d("UPLOAD_DEBUG", "Uploading JSON: $data")
         RetrofitClient.getInstance().getDescriptionApi().saveDescription(data)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

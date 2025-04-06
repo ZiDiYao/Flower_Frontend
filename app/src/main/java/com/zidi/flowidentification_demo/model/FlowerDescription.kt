@@ -1,5 +1,6 @@
 package com.zidi.flowidentification_demo.model
 
-class FlowerDescription(imageName: String, description: Map<String, String>) {
-
-}
+data class FlowerDescription(
+    val imageName: String,
+    val description: Map<String, String>
+)

@@ -115,14 +115,15 @@ class PreviewActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Toast.makeText(this@PreviewActivity, "Upload successful", Toast.LENGTH_SHORT).show()
 
-                        // go to the result page
-                        val intent = Intent(this@PreviewActivity, ResultActivity::class.java)
+                        val intent = Intent(this@PreviewActivity, TextInputActivity::class.java)
+                        intent.putExtra("image_uri", imageUri.toString())
                         startActivity(intent)
+                        finish()
                     } else {
                         Toast.makeText(this@PreviewActivity, "Upload failed: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        Log.e("UPLOAD_DEBUG", "Server error: ${response.code()}")
                     }
                 }
+
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Toast.makeText(this@PreviewActivity, "Network error: ${t.message}", Toast.LENGTH_LONG).show()

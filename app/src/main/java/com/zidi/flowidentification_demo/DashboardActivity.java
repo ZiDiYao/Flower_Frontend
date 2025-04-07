@@ -115,5 +115,4 @@ public class DashboardActivity extends AppCompatActivity {
             Toast.makeText(this, "Image selection failed", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

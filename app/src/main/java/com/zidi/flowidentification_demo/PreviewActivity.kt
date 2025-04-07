@@ -25,6 +25,7 @@ import retrofit2.Response
 
 class PreviewActivity : AppCompatActivity() {
 
+    // Holds the selected image URI
     private var imageUri: Uri? = null
     private val permissionRequestCode = 2000
 
@@ -36,6 +37,7 @@ class PreviewActivity : AppCompatActivity() {
         val btnUpload = findViewById<Button>(R.id.btn_upload_flower)
         val btnBack = findViewById<Button>(R.id.btn_back)
 
+        // Get image URI from intent
         val uriStr = intent.getStringExtra("image_uri")
         if (uriStr == null) {
             Toast.makeText(this, "No image URI received", Toast.LENGTH_SHORT).show()
@@ -44,17 +46,20 @@ class PreviewActivity : AppCompatActivity() {
         }
 
         imageUri = Uri.parse(uriStr)
-        imageView.setImageURI(imageUri)
+        imageView.setImageURI(imageUri)  // Preview image on screen
 
+        // Back button returns to previous screen
         btnBack.setOnClickListener {
             finish()
         }
 
+        // Upload button triggers permission check and upload
         btnUpload.setOnClickListener {
             checkPermissionThenUpload()
         }
     }
 
+    // Check storage permission before uploading image
     private fun checkPermissionThenUpload() {
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_IMAGES
@@ -62,13 +67,16 @@ class PreviewActivity : AppCompatActivity() {
             Manifest.permission.READ_EXTERNAL_STORAGE
         }
 
+        // If not granted, request permission
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(permission), permissionRequestCode)
         } else {
+            // If permission already granted, upload image
             imageUri?.let { uploadImageToServer(it) }
         }
     }
 
+    // Handle permission result
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -83,6 +91,7 @@ class PreviewActivity : AppCompatActivity() {
         }
     }
 
+    // Upload image to Spring Boot backend using Retrofit
     private fun uploadImageToServer(uri: Uri) {
         val contentResolver = contentResolver
         val inputStream = contentResolver.openInputStream(uri)
@@ -91,7 +100,10 @@ class PreviewActivity : AppCompatActivity() {
             return
         }
 
+        // Get MIME type of the selected image
         val mimeType = contentResolver.getType(uri) ?: "image/jpeg"
+
+        // Create a RequestBody manually to read and stream the file
         val requestBody = object : RequestBody() {
             override fun contentType(): MediaType? = MediaType.parse(mimeType)
 
@@ -106,17 +118,22 @@ class PreviewActivity : AppCompatActivity() {
             }
         }
 
+        // Generate a unique image filename with timestamp
         val fileName = "upload_${System.currentTimeMillis()}.jpg"
+
+        // Build multipart form data
         val multipart = MultipartBody.Part.createFormData("image", fileName, requestBody)
 
+        // Send request via Retrofit
         RetrofitClient.getInstance().uploadApi.uploadImage(multipart)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@PreviewActivity, "Upload successful", Toast.LENGTH_SHORT).show()
+                        val fileName = response.body()?.string() ?: "unknown.jpg"
 
+                        // To pass the real image name to TextInputActivity
                         val intent = Intent(this@PreviewActivity, TextInputActivity::class.java)
-                        intent.putExtra("image_uri", imageUri.toString())
+                        intent.putExtra("image_name", fileName)  // 👈 using fileName instead of imageUri
                         startActivity(intent)
                         finish()
                     } else {

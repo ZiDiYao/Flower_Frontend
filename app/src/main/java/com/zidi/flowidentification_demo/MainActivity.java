@@ -1,24 +1,28 @@
 package com.zidi.flowidentification_demo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.zidi.flowidentification_demo.model.LoginRequest;
 import com.zidi.flowidentification_demo.model.LoginResponse;
 import com.zidi.flowidentification_demo.network.RetrofitClient;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import androidx.appcompat.app.AppCompatDelegate;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
-    private Button loginBtn, logoutBtn;
+    private Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,43 +34,55 @@ public class MainActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.input_password);
         loginBtn = findViewById(R.id.btn_login);
 
-        loginBtn.setOnClickListener(v -> {
-            String email = inputEmail.getText().toString().trim();
-            String password = inputPassword.getText().toString().trim();
+        loginBtn.setOnClickListener(v -> handleLogin());
+    }
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Email or password cannot be empty", Toast.LENGTH_SHORT).show();
-                return;
+    private void handleLogin() {
+        String email = inputEmail.getText().toString().trim();
+        String password = inputPassword.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Email or password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LoginRequest request = new LoginRequest(email, password);
+
+        RetrofitClient.getInstance().getAuthApi().login(request).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.d("LOGIN_DEBUG", "response code = " + response.code());
+                Log.d("LOGIN_DEBUG", "response body = " + response.body());
+
+                LoginResponse loginResponse = response.body();
+
+                if (response.isSuccessful() && loginResponse != null && "success".equals(loginResponse.getStatus())) {
+                    Toast.makeText(MainActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // Save user email into SharedPreferences for later use
+                    saveUsername(email);
+
+                    // Navigate to dashboard
+                    Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    String msg = loginResponse != null ? loginResponse.getMessage() : "Unexpected error";
+                    Toast.makeText(MainActivity.this, "Login failed: " + msg, Toast.LENGTH_SHORT).show();
+                }
             }
 
-            LoginRequest request = new LoginRequest(email, password);
-
-            RetrofitClient.getInstance().getAuthApi().login(request).enqueue(new Callback<LoginResponse>(){
-                @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    Log.d("LOGIN_DEBUG", "response code = " + response.code());
-                    Log.d("LOGIN_DEBUG", "response body = " + response.body());
-                    LoginResponse loginResponse = response.body();
-
-                    if (response.isSuccessful() && loginResponse != null && "success".equals(loginResponse.getStatus())) {
-                        Toast.makeText(MainActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    } else {
-                        String msg = loginResponse != null ? loginResponse.getMessage() : "Unexpected error";
-                        Toast.makeText(MainActivity.this, "Login failed: " + msg, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
         });
+    }
 
+    // Store current user's email to SharedPreferences
+    private void saveUsername(String email) {
+        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        prefs.edit().putString("username", email).apply();
     }
 }

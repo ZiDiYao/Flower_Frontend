@@ -27,9 +27,18 @@
         android:id="@+id/btn_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View History"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/buttonGreen"
+        android:text="View History"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/buttonGreen"
+        android:text="Start Quiz"
         android:textColor="@android:color/white" />
 
 

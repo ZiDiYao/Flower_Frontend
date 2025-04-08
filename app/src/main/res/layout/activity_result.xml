@@ -3,46 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAF7F5"
+    android:backgroundTint="@color/backgroundGreen"
     android:padding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_result_flower_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="🌸 The name of the flower: Rose"
+            android:textColor="@color/buttonGreen"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#4A148C"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_result_confidence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="Confidence: 98%"
+            android:textColor="@color/buttonGreen"
             android:textSize="18sp"
-            android:textColor="#6A1B9A"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/backgroundGreen"
+            android:textSize="34sp" />
 
         <TextView
             android:id="@+id/text_result_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Introduction: Roses are a symbol of love and beauty..."
-            android:textSize="16sp"
-            android:textColor="#333333"
-            android:background="#FFFFFF"
-            android:padding="16dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="8dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
             android:elevation="4dp"
-            android:backgroundTint="#FFFFFF" />
+            android:padding="16dp"
+            android:text="Introduction: Roses are a symbol of love and beauty..."
+            android:textColor="#333333"
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>

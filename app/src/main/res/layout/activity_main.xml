@@ -6,54 +6,78 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:padding="32dp">
+
+        <!-- Email Input -->
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I"
+            android:textColor="@color/backgroundGreen"
+            android:textSize="96sp" />
 
         <TextView
             android:id="@+id/app_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="serif"
             android:text="🌸 Flory"
-            android:textSize="32sp"
-            android:textStyle="bold"
             android:textColor="#2E7D32"
-            android:layout_marginBottom="32dp" />
+            android:textSize="48sp"
+            android:textStyle="bold|italic" />
 
-        <!-- Email Input -->
         <EditText
             android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:backgroundTint="@color/buttonGreen"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:backgroundTint="@color/buttonGreen"
+            android:fontFamily="sans-serif"
+            android:hint="Email..."
+            android:inputType="textEmailAddress"
             android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <!-- Password Input -->
         <EditText
             android:id="@+id/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
             android:backgroundTint="@color/buttonGreen"
-            android:layout_marginBottom="24dp"
+            android:fontFamily="sans-serif"
+            android:hint="Password..."
+            android:inputType="textPassword"
             android:padding="12dp"
-            android:background="@drawable/edittext_background" />
+            android:textColorHint="@color/white" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/backgroundGreen"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:backgroundTint="@color/buttonGreen"
-            android:textColor="#FFFFFF"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/button_background" />
+            android:background="@color/buttonGreen"
+            android:backgroundTint="@color/buttonGreen"
+            android:text="Log In"
+            android:textColor="#FFFFFF"
+            android:textColorLink="@color/buttonGreen" />
 
     </LinearLayout>
 </ScrollView>

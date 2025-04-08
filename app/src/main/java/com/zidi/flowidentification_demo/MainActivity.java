@@ -51,18 +51,14 @@ public class MainActivity extends AppCompatActivity {
         RetrofitClient.getInstance().getAuthApi().login(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d("LOGIN_DEBUG", "response code = " + response.code());
-                Log.d("LOGIN_DEBUG", "response body = " + response.body());
+                Log.d("LOGIN_DEBUG", "Response code: " + response.code());
 
                 LoginResponse loginResponse = response.body();
-
                 if (response.isSuccessful() && loginResponse != null && "success".equals(loginResponse.getStatus())) {
                     Toast.makeText(MainActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    // Save user email into SharedPreferences for later use
-                    saveUsername(email);
+                    saveUserId(loginResponse.getUserId());
 
-                    // Navigate to dashboard
                     Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish();
@@ -80,9 +76,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Store current user's email to SharedPreferences
-    private void saveUsername(String email) {
-        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        prefs.edit().putString("username", email).apply();
+    private void saveUserId(Long userId) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        prefs.edit().putLong("userId", userId).apply();
     }
 }

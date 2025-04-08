@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FlowIdentification_Demo</string>
+    <string name="quiz_question">Which flower is Hibiscus?</string>
 </resources>

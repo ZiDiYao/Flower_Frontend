@@ -15,26 +15,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@drawable/ic_launcher_background"
+        android:backgroundTint="@color/backgroundGreen"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:padding="12dp"
-        android:background="#88000000"
-        android:gravity="center">
+        android:padding="12dp">
 
         <Button
             android:id="@+id/btn_upload_flower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/buttonGreen"
             android:text="Upload"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginEnd="8dp" />
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonGreen"
             android:text="Back"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#9E9E9E" />
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </FrameLayout>

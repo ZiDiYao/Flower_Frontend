@@ -1,26 +1,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/backgroundGreen"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="24dp">
+
+    <TextView
+        android:id="@+id/app_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="serif"
+        android:text="🌸 Flory"
+        android:textColor="#2E7D32"
+        android:textSize="48sp"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="20sp"
+        android:layout_marginBottom="24dp"
         android:textColor="@android:color/holo_green_dark"
-        android:layout_marginBottom="24dp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_identify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Identify a Flower by Photo"
         android:backgroundTint="@color/buttonGreen"
+        android:text="Identify a Flower"
         android:textColor="@android:color/white" />
 
     <Button
@@ -30,6 +40,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/buttonGreen"
         android:text="View History"
+
         android:textColor="@android:color/white" />
 
     <Button
@@ -39,6 +50,7 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/buttonGreen"
         android:text="Start Quiz"
+
         android:textColor="@android:color/white" />
 
 

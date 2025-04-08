@@ -158,6 +158,9 @@ class TextInputActivity : AppCompatActivity() {
             put("email", email)
             put("result", result.getJSONObject("result")) // 👈 put the entire JSONObject
         }
+        val resultData = result.getJSONObject("result")
+        val flowerName = resultData.optString("name", "Unknown")
+        val confidence = resultData.optDouble("confidence",-1.0)
         val body = resultPayload.toString().toRequestBody("application/json".toMediaType())
 
 
@@ -167,7 +170,13 @@ class TextInputActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
                         Log.d("SAVE_RESULT", "Saved successfully")
-                        startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
+
+                        val intent = Intent(this@TextInputActivity, ResultActivity::class.java)
+                        intent.putExtra("flowerName", flowerName)
+                        intent.putExtra("confidence", confidence)
+                        intent.putExtra("imageUri", imageUri.toString())
+
+                        startActivity(intent)
                         finish()
                     } else {
                         Log.e("SAVE_RESULT", "Save failed: ${response.code()}")
@@ -304,9 +313,17 @@ class TextInputActivity : AppCompatActivity() {
                         val resultJson = JSONObject(response.body()?.string() ?: "")
                         Log.d("CONFLICT_RESULT", resultJson.toString(4))
                         uploadJson(resultJson)
+
+                        //passing the flower name
+//                        val flowerName = resultJson.getString("name")
+//                        val confidence = resultJson.getDouble("confidence")
+//                        val intent = Intent(this@TextInputActivity, ResultActivity::class.java).apply {
+//                            putExtra("flowerName", flowerName)
+//                            putExtra("confidence", confidence)
+//                            putExtra("imageUri", imageUri.toString())
+//                        }
                         // You could navigate to ResultActivity or update UI
-                        startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
-                        finish()
+                        //finish()
                     } else {
                         Log.e("CONFLICT_RESULT", "Server error: ${response.code()}")
                     }

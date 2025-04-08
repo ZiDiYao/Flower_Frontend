@@ -43,6 +43,8 @@
         <activity android:name=".ResultActivity" />
         <activity android:name=".TextInputActivity" />
         <activity android:name=".HistoryActivity" />
+        <activity android:name=".HistoryDetailActivity" />
+
 
     </application>
 </manifest>

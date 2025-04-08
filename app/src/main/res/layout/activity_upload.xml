@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher_background"
+    android:backgroundTint="@color/backgroundGreen"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/image_preview"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginBottom="24dp"
-        android:background="#EEE"
+        android:background="@android:drawable/alert_dark_frame"
         android:scaleType="centerCrop" />
 
     <Button
         android:id="@+id/btn_select_image"
-        android:text="Pick a Photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/buttonGreen"
+        android:text="Pick a Photo"
         android:textColor="#FFFFFF" />
 </LinearLayout>

@@ -61,6 +61,7 @@ public class RetrofitClient {
 
     public ImageMLAPI getImageMLAPI() {
         return imageMLAPI;
+    }
 
     public ResultApi getResultApi() {
         return resultApi;

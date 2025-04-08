@@ -1,16 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="@color/backgroundGreen"
-    android:orientation="vertical">
+    android:background="#FAF7F5"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/history_text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading history..."
-        android:textSize="18sp"
-        android:textColor="@android:color/black" />
+        android:text="Your Flower History"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#4A148C"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/history_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No history records found."
+        android:textSize="16sp"
+        android:textColor="#999999"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

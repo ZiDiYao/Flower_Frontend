@@ -4,28 +4,23 @@
     android:layout_height="match_parent"
     android:background="#FAF7F5"
     android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Flower History"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#4A148C"
-        android:layout_marginBottom="12dp"/>
-
-    <TextView
-        android:id="@+id/history_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No history records found."
-        android:textSize="16sp"
-        android:textColor="#999999"
-        android:visibility="gone"
-        android:layout_marginBottom="8dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_history"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/history_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading history..."
+                android:textColor="@color/buttonGreen"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

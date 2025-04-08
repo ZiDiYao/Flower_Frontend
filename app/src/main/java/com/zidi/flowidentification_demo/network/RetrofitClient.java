@@ -1,15 +1,17 @@
 package com.zidi.flowidentification_demo.network;
 
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient instance;
-    private static final String BASE_URL = "http://172.20.10.3:8080";
+
+    private static final String BASE_URL = "http://10.0.2.2:8080";
+
     private final UploadApi uploadApi;
     private final AuthApi authApi;
     private final DescriptionApi descriptionApi;
+    private final ResultApi resultApi;
 
     private RetrofitClient() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -20,6 +22,7 @@ public class RetrofitClient {
         uploadApi = retrofit.create(UploadApi.class);
         authApi = retrofit.create(AuthApi.class);
         descriptionApi = retrofit.create(DescriptionApi.class);
+        resultApi = retrofit.create(ResultApi.class);
     }
 
     public static RetrofitClient getInstance() {
@@ -39,5 +42,9 @@ public class RetrofitClient {
 
     public DescriptionApi getDescriptionApi() {
         return descriptionApi;
+    }
+
+    public ResultApi getResultApi() {
+        return resultApi;
     }
 }

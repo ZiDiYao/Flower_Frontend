@@ -36,6 +36,13 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(DashboardActivity.this, HistoryActivity.class);
             startActivity(intent);
         });
+
+        // Button 3: Start quiz
+        Button quizBtn = findViewById(R.id.btn_quiz);
+        quizBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void showImagePickDialog() {

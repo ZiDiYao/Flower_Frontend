@@ -88,7 +88,7 @@ class TextInputActivity : AppCompatActivity() {
                 email = email
             )
 
-            uploadJson(data)
+            //uploadJson(data)
             predict()
         }
     }
@@ -128,25 +128,54 @@ class TextInputActivity : AppCompatActivity() {
     private fun getSpinnerValue(id: Int): String =
         findViewById<Spinner>(id).selectedItem.toString()
 
-    private fun uploadJson(data: FlowerDescription) {
-        Log.d(TAG, "Uploading JSON: $data")
-        RetrofitClient.getInstance().getDescriptionApi().saveDescription(data)
+    private fun uploadJson(result: JSONObject) {
+//        Log.d(TAG, "Uploading JSON: $data")
+//        RetrofitClient.getInstance().getDescriptionApi().saveDescription(data)
+//            .enqueue(object : Callback<ResponseBody> {
+//                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                    if (response.isSuccessful) {
+//                        Log.d(TAG, "Upload success: ${response.body()?.string()}")
+//                        Toast.makeText(this@TextInputActivity, "Saved!", Toast.LENGTH_SHORT).show()
+////                        startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
+////                        finish()
+//                    } else {
+//                        Log.e(TAG, "Upload failed. Response code: ${response.code()}")
+//                        Toast.makeText(this@TextInputActivity, "Save failed", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                    Log.e(TAG, "Upload error: ${t.message}", t)
+//                    Toast.makeText(this@TextInputActivity, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+        val resultPayload = JSONObject().apply{
+            put("imageName", imageName)
+            put("color", color)
+            put("petals", petals)
+            put("smell", smell)
+            put("location", location)
+            put("email", email)
+            put("result", result.getJSONObject("result")) // 👈 put the entire JSONObject
+        }
+        val body = resultPayload.toString().toRequestBody("application/json".toMediaType())
+
+
+        RetrofitClient.getInstance().getUploadApi()
+            .saveResult(body)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Log.d(TAG, "Upload success: ${response.body()?.string()}")
-                        Toast.makeText(this@TextInputActivity, "Saved!", Toast.LENGTH_SHORT).show()
-//                        startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
-//                        finish()
+                        Log.d("SAVE_RESULT", "Saved successfully")
+                        startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
+                        finish()
                     } else {
-                        Log.e(TAG, "Upload failed. Response code: ${response.code()}")
-                        Toast.makeText(this@TextInputActivity, "Save failed", Toast.LENGTH_SHORT).show()
+                        Log.e("SAVE_RESULT", "Save failed: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e(TAG, "Upload error: ${t.message}", t)
-                    Toast.makeText(this@TextInputActivity, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("SAVE_RESULT", "Save error: ${t.message}")
                 }
             })
     }
@@ -208,10 +237,10 @@ class TextInputActivity : AppCompatActivity() {
 
 
     private fun callExpert2(expert1Result: JSONObject) {
-        val color = getSpinnerValue(R.id.spinner_color)
-        val petals = getSpinnerValue(R.id.spinner_petals)
-        val smell = getSpinnerValue(R.id.spinner_smell)
-        val location = getSpinnerValue(R.id.spinner_location)
+        color = getSpinnerValue(R.id.spinner_color)
+        petals = getSpinnerValue(R.id.spinner_petals)
+        smell = getSpinnerValue(R.id.spinner_smell)
+        location = getSpinnerValue(R.id.spinner_location)
 
         // 👇 match JSON keys from Postman exactly
         val expert2Input = mapOf(
@@ -274,7 +303,7 @@ class TextInputActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val resultJson = JSONObject(response.body()?.string() ?: "")
                         Log.d("CONFLICT_RESULT", resultJson.toString(4))
-
+                        uploadJson(resultJson)
                         // You could navigate to ResultActivity or update UI
                         startActivity(Intent(this@TextInputActivity, ResultActivity::class.java))
                         finish()
@@ -288,4 +317,6 @@ class TextInputActivity : AppCompatActivity() {
                 }
             })
     }
+
+
 }

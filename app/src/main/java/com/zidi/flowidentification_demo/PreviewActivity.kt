@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.zidi.flowidentification_demo.network.RetrofitClient
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -105,7 +106,7 @@ class PreviewActivity : AppCompatActivity() {
 
         // Create a RequestBody manually to read and stream the file
         val requestBody = object : RequestBody() {
-            override fun contentType(): MediaType? = MediaType.parse(mimeType)
+            override fun contentType(): MediaType? = mimeType.toMediaTypeOrNull()
 
             override fun writeTo(sink: BufferedSink) {
                 inputStream.use {
@@ -134,6 +135,7 @@ class PreviewActivity : AppCompatActivity() {
                         // To pass the real image name to TextInputActivity
                         val intent = Intent(this@PreviewActivity, TextInputActivity::class.java)
                         intent.putExtra("image_name", fileName)  // 👈 using fileName instead of imageUri
+                        intent.putExtra("image_uri", uri.toString()) // imageUri
                         startActivity(intent)
                         finish()
                     } else {

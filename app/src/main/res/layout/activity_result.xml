@@ -40,19 +40,20 @@
             android:textColor="@color/backgroundGreen"
             android:textSize="34sp" />
 
-        <TextView
-            android:id="@+id/text_result_description"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/image_result_preview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btn_back_to_dashboard"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FFFFFF"
-            android:elevation="4dp"
-            android:padding="16dp"
-            android:text="Introduction: Roses are a symbol of love and beauty..."
-            android:textColor="#333333"
-            android:textSize="16sp" />
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/buttonGreen"
+            android:text="Back to Dashboard"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>
